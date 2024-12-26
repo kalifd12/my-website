@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MetaMask Wallet Integration</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    #account {
+      margin-top: 20px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Connect MetaMask Wallet</h1>
+  <button id="connectButton">Connect Wallet</button>
+  <div id="account"></div>
+
+  <script>
+    // Check if MetaMask is installed
+    if (typeof window.ethereum !== 'undefined') {
+      console.log('MetaMask is installed!');
+    } else {
+      alert('Please install MetaMask to use this feature.');
+    }
+
+    const connectButton = document.getElementById('connectButton');
+    const accountDiv = document.getElementById('account');
+
+    // Connect to MetaMask
+    connectButton.addEventListener('click', async () => {
+      try {
+        // Request account access
+        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+
+        // Get the first account address
+        const account = accounts[0];
+        console.log('Connected account:', account);
+
+        // Display the account address
+        accountDiv.innerText = `Connected Account: ${account}`;
+      } catch (error) {
+        console.error('Error connecting to MetaMask:', error);
+        alert('Failed to connect to MetaMask. Please try again.');
+      }
+    });
+  </script>
+</body>
+</html>
